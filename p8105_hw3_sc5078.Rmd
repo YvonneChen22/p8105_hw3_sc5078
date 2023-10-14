@@ -42,3 +42,4 @@ instacart |>
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
 ```
+The plot shows the number of items ordered in each aisle, limiting this to aisles with more than 10000 items ordered.
