@@ -31,5 +31,14 @@ instacart |>
 This is a table summarizing the number of items ordered from aisle. In total, there are 134 aisles, with fresh vegetables being the most items ordered by far.
 
 
+```{r}
+instacart |> 
+  count(aisle) |> 
+  filter(n > 10000) |> 
+  mutate(aisle = fct_reorder(aisle, n)) |> 
+  ggplot(aes(x = aisle, y = n)) + 
+  geom_point() + 
+  labs(title = "Number of items ordered in each aisle") +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
-
+```
