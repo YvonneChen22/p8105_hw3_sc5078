@@ -10,8 +10,7 @@ output: github_document
 library(tidyverse)
 library(ggridges)
 library(patchwork)
-library(httr)
-library(jsonlite)
+
 
 library(p8105.datasets)
 
