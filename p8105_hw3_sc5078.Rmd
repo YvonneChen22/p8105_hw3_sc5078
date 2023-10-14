@@ -188,7 +188,16 @@ There are more male (50400) have high school equivalent education level than fem
 
 Create a visualization of the age distributions for men and women in each education category.
 ```{r}
-
+nhanes |>
+  group_by(education, sex) |>
+  ggplot(aes(x = age, fill = sex)) +
+  geom_histogram(binwidth = 5, position = "dodge") +
+  facet_wrap(~ education, nrow = 2) +
+  labs(title = "Age Distributions by Education Category",
+       x = "Age",
+       y = "Frequency") +
+  scale_fill_manual(values = c("Male" = "blue", "Female" = "pink")) +
+  theme_minimal()
 
 ```
 
