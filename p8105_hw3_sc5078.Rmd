@@ -130,4 +130,22 @@ brfss_smart2010 |>
 There is a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.
 
 
+# Problem 3
+Load and tidy dataset, nhanes_accel
+```{r load and tidy dataset, nhanes_accel}
+nhanes_accel = read.csv("./data/nhanes_accel.csv") |>
+  janitor::clean_names()|>
+  pivot_longer(
+    min1:min1440,
+    names_to = "minute", 
+    names_prefix = "min",
+    values_to = "min") |>
+  mutate(
+    minute = as.numeric(minute)
+  )
+```
+
+
+
+
 
