@@ -78,9 +78,22 @@ data("brfss_smart2010")
 
 data cleaning
 ```{r "BRFSS" data cleaning}
-
-
-
-
-
+brfss_smart2010 = brfss_smart2010 |>
+  janitor::clean_names()|>
+  filter(topic %in% "Overall Health") |>
+  filter(response %in% c("Excellent", "Very good", "Good", "Fair", "Poor")) |>
+  mutate(response = ordered(response, levels=c("Poor", "Fair", "Good", "Very good", "Excellent"))) |>
+  arrange(response)
 ```
+
+answering following questions
+```{r}
+brfss_smart2010 |>
+  filter(year %in% c(2002, 2010)) |>
+  group_by(year, locationabbr) |>
+  filter(n_distinct(locationdesc) >= 7) |>
+  summarize()
+```
+List of states were observed at 7 or more locations in year 2002 and 2010.
+
+
