@@ -145,7 +145,8 @@ nhanes_accel = read.csv("./data/nhanes_accel.csv") |>
     names_prefix = "min",
     values_to = "min") |>
   mutate(
-    minute = as.numeric(minute)
+    minute = as.numeric(minute),
+    min = as.numeric(min)
   )
 ```
 
@@ -199,6 +200,24 @@ nhanes |>
 
 ```
 The age distribution between female and male is similar in the "less than high school" and "More than high school" education group. However, for the "High school equivalent" education level, females would have a higher maximum age, minimum age, and average age than males. For females, "High school equivalent" education level has the highest mean age, `r filter(nhanes, sex == "female", education == "High school equivalent") |> pull(age) |> mean() |> round(2)`, while "More than high school" education level has the lowest mean age, `r filter(nhanes, sex == "female", education == "More than high school") |> pull(age) |> mean() |> round(2)`. For males, "Less than high school" have the highest mean age, `r filter(nhanes, sex == "male", education == "Less than high school") |> pull(age) |> mean() |> round(2)`, while "More than high school" education level has the lowest mean age, `r filter(nhanes, sex == "male", education == "More than high school") |> pull(age) |> mean() |> round(2)`.
+
+
+Aggregate across minutes to create a total activity variable for each participant. Plot these total activities (y-axis) against age (x-axis).
+```{r}
+nhanes |>
+  group_by(seqn, age, sex, education) |>
+  summarize(total_activity = sum(min)) |>
+  ggplot(aes(x = age, y = total_activity, color = sex)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, aes(group = sex), linetype = 2) +
+  facet_wrap(~ education, nrow = 2) +
+  labs(title = "Total Activity vs. Age by Education Level",
+       x = "Age",
+       y = "Total Activity",
+       color = "Sex") +
+  theme_minimal()
+```
+
 
 
 
