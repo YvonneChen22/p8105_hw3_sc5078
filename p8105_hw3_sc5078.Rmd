@@ -169,6 +169,11 @@ nhanes_covar = read.csv("./data/nhanes_covar.csv", skip = 4) |>
   )
 ```
 
+Merge nhanes_accel and nhanes_covar into nhanes
+```{r merge to nhanes}
+nhanes = 
+  left_join(nhanes_covar, nhanes_accel, by = "seqn")
+```
 
 
 
