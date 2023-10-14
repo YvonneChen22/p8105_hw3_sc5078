@@ -23,14 +23,16 @@ data("instacart")
 ```
 This dataset comprises `r nrow(instacart)` rows and `r ncol(instacart)` columns. Each row corresponds to a single product within an Instacart order. The variables encompass user, order, and product identifiers, as well as the order placement sequence. Order-level attributes include details about the order's day, time, and days since the previous order. Additionally, item-specific characteristics cover the product name (e.g., Yogurt, Avocado), department (e.g., dairy and eggs, produce), aisle (e.g., yogurt, fresh fruits), and whether the item has been previously ordered by the user. In total, there are `r instacart |> select(product_id) |> distinct() |> count()` distinct products found in `r instacart |> select(user_id, order_id) |> distinct() |> count()` unique orders placed by `r instacart |> select(user_id) |> distinct() |> count()` different users.
 
+
+This is a table summarizing the number of items ordered from aisle. In total, there are 134 aisles, with fresh vegetables being the most items ordered by far.
 ```{r}
 instacart |> 
   count(aisle) |> 
   arrange(desc(n))
 ```
-This is a table summarizing the number of items ordered from aisle. In total, there are 134 aisles, with fresh vegetables being the most items ordered by far.
 
 
+The plot shows the number of items ordered in each aisle, limiting this to aisles with more than 10000 items ordered.
 ```{r}
 instacart |> 
   count(aisle) |> 
@@ -42,9 +44,9 @@ instacart |>
   theme(axis.text.x = element_text(angle = 60, hjust = 1))
 
 ```
-The plot shows the number of items ordered in each aisle, limiting this to aisles with more than 10000 items ordered.
 
 
+This is a table showing the three most popular items in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits”.
 ```{r}
 instacart |> 
   filter(aisle %in% c("baking ingredients", "dog food care", "packaged vegetables fruits")) |>
@@ -55,8 +57,9 @@ instacart |>
   arrange(desc(n)) |>
   knitr::kable()
 ```
-This is a table showing the three most popular items in each of the aisles “baking ingredients”, “dog food care”, and “packaged vegetables fruits”.
 
+
+This is a table showing the mean hour of the day at which Pink Lady Apples and Coffee Ice Cream are ordered on each day of the week.
 ```{r}
 instacart |>
   filter(product_name %in% c("Pink Lady Apples", "Coffee Ice Cream")) |>
@@ -67,7 +70,6 @@ instacart |>
     values_from = mean_hour) |>
   knitr::kable(digits = 2)
 ```
-This is a table showing the mean hour of the day at which Pink Lady Apples and Coffee Ice Cream are ordered on each day of the week.
 
 
 # Problem 2
@@ -86,7 +88,8 @@ brfss_smart2010 = brfss_smart2010 |>
   arrange(response)
 ```
 
-answering following questions
+
+List of states were observed at 7 or more locations in year 2002 and 2010.
 ```{r}
 brfss_smart2010 |>
   filter(year %in% c(2002, 2010)) |>
@@ -94,8 +97,9 @@ brfss_smart2010 |>
   filter(n_distinct(locationdesc) >= 7) |>
   summarize()
 ```
-List of states were observed at 7 or more locations in year 2002 and 2010.
 
+
+Construct a dataset, excellent, that is limited to Excellent responses, and contains, year, state, and a variable that averages the data_value across locations within a state. This is a “spaghetti” plot of this average value over time within a state.
 ```{r}
 excellent <- brfss_smart2010 |>
   filter(response %in% "Excellent") |>
@@ -113,8 +117,9 @@ ggplot(excellent, aes(x = year, y = average_data, color = locationabbr)) +
        color = "State") + 
   theme_minimal()
 ```
-Construct a dataset, excellent, that is limited to Excellent responses, and contains, year, state, and a variable that averages the data_value across locations within a state. This is a “spaghetti” plot of this average value over time within a state.
 
+
+There is a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.
 ```{r}
 brfss_smart2010 |>
   filter(year %in% c(2006, 2010)) |>
@@ -127,7 +132,6 @@ brfss_smart2010 |>
        y = "Data Value") +
   theme_minimal()
 ```
-There is a two-panel plot showing, for the years 2006, and 2010, distribution of data_value for responses (“Poor” to “Excellent”) among locations in NY State.
 
 
 # Problem 3
@@ -175,5 +179,17 @@ nhanes =
   left_join(nhanes_covar, nhanes_accel, by = "seqn")
 ```
 
+This is a reader-friendly table for the number of men and women in each education category.
+```{r}
+nhanes |>
+  janitor::tabyl(education, sex)
+```
+There are more male (50400) have high school equivalent education level than female (33120). There are more female have less than high school education or more than high school education than male.
+
+Create a visualization of the age distributions for men and women in each education category.
+```{r}
+
+
+```
 
 
