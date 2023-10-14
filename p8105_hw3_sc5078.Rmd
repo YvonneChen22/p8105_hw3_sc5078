@@ -23,9 +23,12 @@ data("instacart")
 This dataset comprises `r nrow(instacart)` rows and `r ncol(instacart)` columns. Each row corresponds to a single product within an Instacart order. The variables encompass user, order, and product identifiers, as well as the order placement sequence. Order-level attributes include details about the order's day, time, and days since the previous order. Additionally, item-specific characteristics cover the product name (e.g., Yogurt, Avocado), department (e.g., dairy and eggs, produce), aisle (e.g., yogurt, fresh fruits), and whether the item has been previously ordered by the user. In total, there are `r instacart |> select(product_id) |> distinct() |> count(`) distinct products found in `r instacart |> select(user_id, order_id) |> distinct() |> count()` unique orders placed by `r instacart |> select(user_id) |> distinct() |> count()` different users.
 
 
-
-
-
+```{r}
+instacart |> 
+  count(aisle) |> 
+  arrange(desc(n))
+```
+This is a table summarizing the number of items ordered from aisle. In total, there are 134 aisles, with fresh vegetables being the most items ordered by far.
 
 
 
