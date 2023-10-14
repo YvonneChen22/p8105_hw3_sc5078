@@ -96,4 +96,22 @@ brfss_smart2010 |>
 ```
 List of states were observed at 7 or more locations in year 2002 and 2010.
 
+```{r}
+excellent <- brfss_smart2010 |>
+  filter(response %in% "Excellent") |>
+  group_by(year, locationabbr) |>
+  mutate(
+    average_data = mean(data_value)
+  ) |>
+  summarize(year, average_data)
+
+ggplot(excellent, aes(x = year, y = average_data, color = locationabbr)) +
+  geom_line()  +
+  labs(title = "Average Value Over Time within a State",
+       x = "Year",
+       y = "Average Value",
+       color = "State") + 
+  theme_minimal()
+```
+Construct a dataset, excellent, that is limited to Excellent responses, and contains, year, state, and a variable that averages the data_value across locations within a state. This is a “spaghetti” plot of this average value over time within a state.
 
