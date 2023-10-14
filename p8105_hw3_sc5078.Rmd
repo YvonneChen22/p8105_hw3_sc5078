@@ -1,0 +1,15 @@
+---
+title: "p8105_hw3_sc5078"
+author: "Yvonne Chen"
+date: "2023-10-14"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r cars}
+summary(cars)
+```
