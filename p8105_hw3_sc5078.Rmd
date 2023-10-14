@@ -74,12 +74,12 @@ instacart |>
 
 # Problem 2
 load the dataset, BRFSS
-```{r import "BRFSS"}
+```{r import BRFSS}
 data("brfss_smart2010")
 ```
 
 data cleaning
-```{r "BRFSS" data cleaning}
+```{r BRFSS data cleaning}
 brfss_smart2010 = brfss_smart2010 |>
   janitor::clean_names()|>
   filter(topic %in% "Overall Health") |>
@@ -219,5 +219,20 @@ nhanes |>
 ```
 
 
+Make a three-panel plot that shows the 24-hour activity time courses for each education level and use color to indicate sex. Describe in words any patterns or conclusions you can make based on this graph; including smooth trends may help identify differences.
+```{r}
+nhanes |>
+  group_by(sex, age, minute) |>
+  ggplot(aes(x = minute, y = min, color = sex)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, aes(group = sex), linetype = 2) +
+  facet_wrap(~ education, nrow = 2) +
+  labs(title = "24-hour activity time courses by Education Level",
+       x = "Minute",
+       y = "Min",
+       color = "Sex") +
+  theme_minimal()
+
+```
 
 
