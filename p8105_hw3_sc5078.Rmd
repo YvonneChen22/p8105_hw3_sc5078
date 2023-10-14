@@ -5,11 +5,15 @@ date: "2023-10-14"
 output: github_document
 ---
 
-```{r setup, include=FALSE}
+# Problem 0
+```{r setup}
 knitr::opts_chunk$set(echo = TRUE)
+library(p8105.datasets)
+
 ```
 
+# Problem 1
+```{r import "instacart"}
+data("instacart")
 
-```{r cars}
-summary(cars)
 ```
